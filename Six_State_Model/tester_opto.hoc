@@ -3,9 +3,9 @@
 load_file("nrngui.hoc")
 load_proc("nrnmainmenu")
 
-dt = 1e-3
+dt = 1e-2
 
-tstop = 300
+tstop = 2000
 
 create soma, axon
 v_init=-65
@@ -36,18 +36,19 @@ connect soma(1), axon(0)
 objectvar stim
 soma stim = new LitClamp(0.5)
 setpointer stim.irr(), soma.irr_opto(0.5)
-stim.del = 50
-stim.dur = 200
-stim.amp = 4e1
+stim.del = 500
+stim.dur = 100
+stim.amp = 100
 
-objectvar stim2
+
+/*objectvar stim2
 axon stim2 = new LitClamp(0.01)
 setpointer stim2.irr(),axon.irr_opto(0.1)
 stim2.del = 0
 stim2.dur = 50
-stim2.amp = 3e-2
-/*
-objectvar voltclamp2
+stim2.amp = 0//3e-2
+
+/*objectvar voltclamp2
 soma voltclamp2 = new SEClamp(0.5)
 voltclamp2.rs = 1e-5
 voltclamp2.dur1 = tstop
@@ -58,9 +59,9 @@ axon voltclamp1 = new SEClamp(0.5)
 voltclamp1.rs = 1e-5
 voltclamp1.dur1 = tstop
 voltclamp1.amp1 = -70
-*/
 
-/*
+
+
 objectvar stim3
 axon stim3 = new LitClamp(0.99)
 setpointer stim3.irr(),axon.irr_opto(0.99)
@@ -73,7 +74,7 @@ objref p,g,k,l, s1, s2, s3, s4, s5, s6
 objref vsoma,lstim,isod,iopt
 objref a_iopt
 objref m,n,h
-//objref aonev,athree,btwo,bfour
+objref aonev,athree,btwo,bfour
 p = new Graph()
 p.size(0,tstop,0,1)
 g = new Graph()
@@ -100,12 +101,12 @@ m = new Vector()
 n = new Vector()
 h = new Vector()
 
-/*
+
 aonev = new Vector()
 athree = new Vector()
 btwo = new Vector()
 bfour = new Vector()
-*/
+
 
 s1.record(&soma.s1_opto(.5))
 s2.record(&soma.s2_opto(.5))
@@ -149,7 +150,7 @@ s6.plot(p,dt,6,1)
 
 iopt.plot(g,dt,2,1)
 isod.plot(g,dt,3,1)
-//a_iopt.plot(g,dt,2,1)
+a_iopt.plot(g,dt,2,1)
 
 lstim.plot(k,dt,1,1)
 vsoma.plot(k,dt,2,1)
